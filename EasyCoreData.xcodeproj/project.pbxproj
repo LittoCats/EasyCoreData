@@ -13,6 +13,9 @@
 		A11FCAEF1AB975F700127A6E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A11FCAEE1AB975F700127A6E /* Images.xcassets */; };
 		A11FCAF21AB975F700127A6E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11FCAF01AB975F700127A6E /* LaunchScreen.xib */; };
 		A11FCAFE1AB975F700127A6E /* EasyCoreDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11FCAFD1AB975F700127A6E /* EasyCoreDataTests.swift */; };
+		A11FCB081AB9762700127A6E /* EasyCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11FCB071AB9762700127A6E /* EasyCoreData.swift */; };
+		A19253761AB9BF3500D511DF /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A19253741AB9BF3500D511DF /* Model.xcdatamodeld */; };
+		A19253781AB9CA4B00D511DF /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19253771AB9CA4B00D511DF /* Entity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,10 @@
 		A11FCAF71AB975F700127A6E /* EasyCoreDataTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EasyCoreDataTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A11FCAFC1AB975F700127A6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A11FCAFD1AB975F700127A6E /* EasyCoreDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyCoreDataTests.swift; sourceTree = "<group>"; };
+		A11FCB071AB9762700127A6E /* EasyCoreData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyCoreData.swift; sourceTree = "<group>"; };
+		A15C347B1ABAA0F000F1AC05 /* Model1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model1.xcdatamodel; sourceTree = "<group>"; };
+		A19253751AB9BF3500D511DF /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A19253771AB9CA4B00D511DF /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +90,9 @@
 				A11FCAEE1AB975F700127A6E /* Images.xcassets */,
 				A11FCAF01AB975F700127A6E /* LaunchScreen.xib */,
 				A11FCAE51AB975F700127A6E /* Supporting Files */,
+				A11FCB071AB9762700127A6E /* EasyCoreData.swift */,
+				A19253741AB9BF3500D511DF /* Model.xcdatamodeld */,
+				A19253771AB9CA4B00D511DF /* Entity.swift */,
 			);
 			path = EasyCoreData;
 			sourceTree = "<group>";
@@ -213,7 +223,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11FCAEA1AB975F700127A6E /* ViewController.swift in Sources */,
+				A19253781AB9CA4B00D511DF /* Entity.swift in Sources */,
+				A11FCB081AB9762700127A6E /* EasyCoreData.swift in Sources */,
 				A11FCAE81AB975F700127A6E /* AppDelegate.swift in Sources */,
+				A19253761AB9BF3500D511DF /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +420,7 @@
 				A11FCB031AB975F700127A6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A11FCB041AB975F700127A6E /* Build configuration list for PBXNativeTarget "EasyCoreDataTests" */ = {
 			isa = XCConfigurationList;
@@ -415,8 +429,23 @@
 				A11FCB061AB975F700127A6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A19253741AB9BF3500D511DF /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A15C347B1ABAA0F000F1AC05 /* Model1.xcdatamodel */,
+				A19253751AB9BF3500D511DF /* Model.xcdatamodel */,
+			);
+			currentVersion = A15C347B1ABAA0F000F1AC05 /* Model1.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A11FCADA1AB975F700127A6E /* Project object */;
 }
