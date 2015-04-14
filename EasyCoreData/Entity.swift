@@ -10,9 +10,18 @@ import Foundation
 import CoreData
 
 @objc(Entity)
-class Entity: NSManagedObject {
+class Entity: NSManagedObject, NSManagedObjectJSONProtocol {
 
     @NSManaged var name: String
     @NSManaged var address: String
 
+    func loadContent(json: NSDictionary) -> Self {
+        self.name = json.objectForKey("name") as! String
+        self.address = json.objectForKey("address") as! String
+        return self
+    }
+    
+    func JSON() -> NSDictionary {
+        return NSDictionary()
+    }
 }

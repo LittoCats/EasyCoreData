@@ -18,8 +18,16 @@ class ViewController: UIViewController {
             var context = EasyCoreData.context(momd: "Model")
             println("\n\(context)\n\(context.parentContext)\n\(context.parentContext?.parentContext)\n")
             
-            context.objects(entity: Entity.self, predicate: NSPredicate(format: "name like %@", argumentArray: ["NM:774"])).map { (object: Entity)->Void in
-                println(object.name)
+//            var instance = context.insert(entity: Entity.self)
+            
+//            var count = 1000
+//            while count-- > 0{
+//                context.insert(entity: Entity.self, content: ["name": "test_\(count)", "address": "address_\(count)"])
+//                if count % 50 == 0 {context.save(nil)}
+//            }
+//            context.save(nil)
+            context.objects(entity: Entity.self).map { (object: Entity)->Void in
+                println("\(object.name)  \(object.address)")
             }
         })
         

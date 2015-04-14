@@ -98,7 +98,7 @@ extension EasyCoreData {
         }
     }
     
-    private class BackgroundContext: BaseContext {
+    private final class BackgroundContext: BaseContext {
         
         convenience init(){
             self.init(concurrencyType: .PrivateQueueConcurrencyType)
@@ -156,7 +156,7 @@ extension EasyCoreData {
         }
     }
     
-    private class MainContext: BaseContext {
+    private final class MainContext: BaseContext {
         
         convenience init(){
             self.init(concurrencyType: .MainQueueConcurrencyType)
@@ -171,7 +171,7 @@ extension EasyCoreData {
         }
     }
     
-    private class CustomContext: BaseContext{
+    private final class CustomContext: BaseContext{
         
         convenience init(){
             self.init(concurrencyType: .PrivateQueueConcurrencyType)
@@ -187,15 +187,26 @@ extension EasyCoreData {
     }
 }
 
+protocol NSManagedObjectJSONProtocol {
+    func loadContent(json: NSDictionary) ->Self
+    func JSON()->NSDictionary
+}
+
 extension NSManagedObjectContext {
     /**
     *  insert
     */
-    func insert<T: NSManagedObject>(#entity: T.Type) ->T{
-        var entityName: String = NSString(UTF8String: class_getName(entity))!
+    final func insert<T: NSManagedObject>(#entity: T.Type) ->T{
+        var entityName: String = NSString(UTF8String: class_getName(entity))! as String
         var entityDescription = (self.persistentStoreCoordinator?.managedObjectModel.entitiesByName as? [String: NSEntityDescription])?[entityName]
         var ret: T = entity(entity: entityDescription!, insertIntoManagedObjectContext: self)
         
+        return ret
+    }
+    
+    final func insert<T where T: NSManagedObject, T: NSManagedObjectJSONProtocol>(#entity: T.Type, content json: NSDictionary) ->T{
+        var ret: T = self.insert(entity: entity)
+        ret.loadContent(json)
         return ret
     }
     
@@ -207,9 +218,9 @@ extension NSManagedObjectContext {
     *  @sort NSSortDescriptor The sort descriptors specify how the objects returned when the fetch request is issued should be ordered—for example by last name then by first name. The sort descriptors are applied in the order in which they appear in the sortDescriptors array (serially in lowest-array-index-first order).A value of nil is treated as no sort descriptors.
     *  @predicate  The predicate is used to constrain the selection of objects the receiver is to fetch.
     */
-    func objects<T: NSManagedObject>(#entity: T.Type, predicate: NSPredicate? = nil, sortors: [NSSortDescriptor]? = nil, limit: Int? = nil, offset: Int? = nil) ->[T]{
+    final func objects<T: NSManagedObject>(#entity: T.Type, predicate: NSPredicate? = nil, sortors: [NSSortDescriptor]? = nil, limit: Int? = nil, offset: Int? = nil) ->[T]{
         var entityName = NSString(UTF8String: class_getName(entity))!
-        var request: NSFetchRequest = NSFetchRequest(entityName: entityName)
+        var request: NSFetchRequest = NSFetchRequest(entityName: entityName as String)
         request.predicate = predicate
         request.sortDescriptors = sortors
         if limit != nil {request.fetchLimit = limit!}
@@ -227,10 +238,19 @@ extension NSManagedObjectContext {
     }
     
     /**
+    *   根据实体类型，删除记录
+    */
+    final func delete<T: NSManagedObject>(#entity: T.Type, predicate: NSPredicate? = nil) ->Void{
+        self.objects(entity: entity, predicate: predicate).map {(transform: T) -> Void in
+            self.deleteObject(transform)
+        }
+    }
+    
+    /**
     *   因为 ContextTable  没有对 moc (self) 强引用，在超出 moc 所在的语法范围后，moc 将会释放，如果在同一线程中多个语法范围内获取 moc ，将会出现频繁生成 moc 实例的情况
     *   调用 cache() 方法，将 moc 与所在线程关联，即使超出语法范围，在线程（NSThread 实例) 关闭（释放）前，moc 不会被释放
     */
-    func cache() ->Self{
+    final func cache() ->Self{
         var cache = EasyCoreData.ContextTable.objectForKey(NSThread.currentThread()) as? NSMapTable
         cache?.setObject(self as NSManagedObjectContext, forKey: cache!)
         return self
@@ -239,9 +259,10 @@ extension NSManagedObjectContext {
     /**
     *   解除 moc 与所在线程的关联
     */
-    func deCache() ->Self{
+    final func deCache() ->Self{
         var cache = EasyCoreData.ContextTable.objectForKey(NSThread.currentThread()) as? NSMapTable
         cache?.removeObjectForKey(self as NSManagedObjectContext)
         return self
     }
 }
+
